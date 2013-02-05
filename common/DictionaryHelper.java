@@ -3,7 +3,17 @@ import java.io.*;
 import java.util.*;
 
 public class DictionaryHelper{
-	private static Set<String> dictionary = new HashSet<String> ();
+
+	private  static Set<String> Dictionary = new HashSet<String> ();
+	
+	public static Set<String>  GetDictionary(){
+		if(Dictionary.size() == 0)
+		{
+			LoadDictionary();
+		}
+		return Dictionary;
+	}
+	
 	public static void LoadDictionary(){
 		LoadDictionary("C:\\Users\\KayySean\\Documents\\GitHub\\interview\\common\\dictionary.csv");
 	}
@@ -15,10 +25,10 @@ public class DictionaryHelper{
 			bi = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
 			while( (input = bi.readLine()) != null){
 				if( input.trim().length() > 0){
-					dictionary.add(input);
+					Dictionary.add(input);
 				}
 			}
-			System.out.println(String.format(" Dictionary created with %d words successfully ", dictionary.size()));
+			System.out.println(String.format(" Dictionary created with %d words successfully ", Dictionary.size()));
 		}catch(IOException ioe){
 			ioe.printStackTrace();
 		}
