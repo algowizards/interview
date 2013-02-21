@@ -13,7 +13,7 @@ public class Problem10_SelectionSort{
 					minIndex = j;
 				}
 			}
-			swap(array, i, minIndex);
+			TestDataGenerator.Swap(array, i, minIndex);
 		}
 	
 	}

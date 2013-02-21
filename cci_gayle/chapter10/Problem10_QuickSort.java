@@ -24,11 +24,11 @@ public class Problem10_QuickSort{
 		for (int j = p ; j < r; j++){
 			if( array[j] < x){
 				i++;
-				TestDataGenerator.swap(array, i , j);
+				TestDataGenerator.Swap(array, i , j);
 			}
 		}
 		i++;
-		TestDataGenerator.swap(array, i , r);
+		TestDataGenerator.Swap(array, i , r);
 		return i;
 	}
 	

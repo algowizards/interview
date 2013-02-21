@@ -48,7 +48,7 @@ public class TestDataGenerator{
 		System.out.println("");
 	}
 	
-	public static void swap(Integer[] array, int index1, int index2){
+	public static void Swap(Integer[] array, int index1, int index2){
 		int temp = array[index1];
 		array[index1] = array[index2];
 		array[index2] = temp;
