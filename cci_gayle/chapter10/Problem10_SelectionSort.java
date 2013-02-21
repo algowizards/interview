@@ -18,12 +18,6 @@ public class Problem10_SelectionSort{
 	
 	}
 	
-	public static void swap(Integer[] array, int index1, int index2){
-		int temp = array[index1];
-		array[index1] = array[index2];
-		array[index2] = temp;
-	}	
-	
 	public static void main(String args[]){
 		Integer[] temp = TestDataGenerator.GetArray( 10, true, 20);
 		TestDataGenerator.PrintArray(temp);

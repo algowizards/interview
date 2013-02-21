@@ -28,10 +28,11 @@ public class TestDataGenerator{
 		throw new Exception("Not implemented yet");
 	}
 	
-	
 	public static void PrintArray(Integer[] array){
+	
 		PrintArray(new ArrayList<Integer>(Arrays.asList(array)));
 	}
+	
 	public static void PrintArray(ArrayList<Integer> array){
 		System.out.println("");
 		
@@ -45,6 +46,12 @@ public class TestDataGenerator{
 		}
 		
 		System.out.println("");
+	}
+	
+	public static void swap(Integer[] array, int index1, int index2){
+		int temp = array[index1];
+		array[index1] = array[index2];
+		array[index2] = temp;
 	}
 	
 	public static void main(String args[]){

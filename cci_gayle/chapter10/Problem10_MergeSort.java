@@ -8,6 +8,7 @@ public class Problem10_MergeSort{
 		}
 		SortRec(array, 0, array.length - 1);
 	}
+	
 	private static void SortRec(Integer[] array, int p, int r){
 		if( p < r ){
 			int q = (p+r)/2;
@@ -15,7 +16,6 @@ public class Problem10_MergeSort{
 			SortRec(array, q+1, r);
 			merge(array, p, q , r );
 		}	
-		
 		
 	}
 	private static void merge(Integer[] array, int p, int q, int r){
