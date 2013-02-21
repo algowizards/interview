@@ -28,7 +28,11 @@ public class TestDataGenerator{
 		throw new Exception("Not implemented yet");
 	}
 	
+	
 	public static void PrintArray(Integer[] array){
+		PrintArray(new ArrayList<Integer>(Arrays.asList(array)));
+	}
+	public static void PrintArray(ArrayList<Integer> array){
 		System.out.println("");
 		
 		if(array == null)
@@ -36,8 +40,8 @@ public class TestDataGenerator{
 			System.out.println("Empty array");
 			return;
 		}
-		for (int i = 0; i< array.length; i++){
-			System.out.print(" " + array[i]);
+		for (int i = 0; i< array.size(); i++){
+			System.out.print(" " + array.get(i));
 		}
 		
 		System.out.println("");
