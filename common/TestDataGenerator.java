@@ -28,12 +28,12 @@ public class TestDataGenerator{
 		throw new Exception("Not implemented yet");
 	}
 	
-	public static void PrintArray(Integer[] array){
+	public static<T> void PrintArray(T[] array){
 	
-		PrintArray(new ArrayList<Integer>(Arrays.asList(array)));
+		PrintArray(new ArrayList<T>(Arrays.asList(array)));
 	}
 	
-	public static void PrintArray(ArrayList<Integer> array){
+	public static<T> void PrintArray(ArrayList<T> array){
 		System.out.println("");
 		
 		if(array == null)
@@ -54,9 +54,14 @@ public class TestDataGenerator{
 		array[index2] = temp;
 	}
 	
+	public static String[] GetStringArray(){
+		return new String[] {"abc", "aaa", "abbc", "bca", "dca", "cab"};
+	}
+	
 	public static void main(String args[]){
 		
 		Integer[] temp = GetArray( 10, true, 20);
 		PrintArray(temp);
 	}
+	
 }
