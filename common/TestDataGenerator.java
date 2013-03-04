@@ -28,6 +28,18 @@ public class TestDataGenerator{
 		throw new Exception("Not implemented yet");
 	}
 	
+	
+	public static void MakeRandomValuesNegative(Integer[] array){
+		if(array == null)
+			return;
+		Random r = new Random();	
+		for(int i = 0; i< array.length; i++){
+			if( (r.nextInt()%2) == 0 ){
+				array[i] = -array[i];				
+			}
+		}	
+	}
+	
 	public static<T> void PrintArray(T[] array){
 	
 		PrintArray(new ArrayList<T>(Arrays.asList(array)));
@@ -61,6 +73,8 @@ public class TestDataGenerator{
 	public static void main(String args[]){
 		
 		Integer[] temp = GetArray( 10, true, 20);
+		PrintArray(temp);
+		MakeRandomValuesNegative(temp);
 		PrintArray(temp);
 	}
 	
