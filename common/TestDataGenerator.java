@@ -28,6 +28,20 @@ public class TestDataGenerator{
 		throw new Exception("Not implemented yet");
 	}
 	
+	public static void PrintMasterList(ArrayList<ArrayList<Node>> masterList){
+	
+		for(int i = 0; i < masterList.size(); i++){
+			System.out.print(String.format("\nPrinting List# %d  : ", i));	
+			PrintNodeList(masterList.get(i));
+		}
+	}
+	
+	public static void PrintNodeList(ArrayList<Node> list){
+		for( int i=0; i < list.size(); i++){
+			System.out.print(String.format("%d ",list.get(i).data));
+		}
+	}
+	
 	
 	public static void MakeRandomValuesNegative(Integer[] array){
 		if(array == null)
