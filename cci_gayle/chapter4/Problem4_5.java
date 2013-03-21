@@ -1,6 +1,6 @@
 import java.util.*;
 
-
+//needs a revisit and reimplementation using the cleaner soln in the book
 public class Problem4_5{
 	public static boolean IsTreeBST(TreeNode<Integer> root){
 		try{

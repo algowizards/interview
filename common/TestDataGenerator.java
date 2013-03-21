@@ -24,8 +24,14 @@ public class TestDataGenerator{
 		}
 	}
 	
-	public static void Shuffle(Integer[] array) throws Exception{
-		throw new Exception("Not implemented yet");
+	public static void Shuffle(Integer[] array) {
+		Random r = new Random();
+		for(int i = 0; i < array.length ; i++){
+			int randIndex = r.nextInt((array.length-i) );
+			Swap(array, (array.length-i-1) , randIndex);
+		
+		}
+		
 	}
 	
 	public static void PrintMasterList(ArrayList<ArrayList<Node>> masterList){
