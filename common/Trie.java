@@ -1,6 +1,8 @@
+import java.util.*;
+
 public class Trie{
 	
-	private TrieNode root = new TrieNode();
+	private TrieNode root = new TrieNode(null);
 	private TrieNode current = root;
 	
 	public void BuildTrie(ArrayList<String> wordList){
@@ -8,77 +10,76 @@ public class Trie{
 		System.out.println("Building Trie...");
 		for(int i = 0 ; i < wordList.size(); i++)
 		{
-			AddWord(wordList.get(i);
+			AddWord(wordList.get(i));
 		}		
-		System.out.println("Complete with " + wordList.size() + " elements");
+		System.out.println("Trie Complete with " + wordList.size() + " elements");
 	}
+	
 	public void AddWord(String word){
-		
-		StringBuffer wordBuffer = new StringBuffer(word.toLower());
+	
+		word = word.toLowerCase();
+		System.out.println("Adding word: " + word);	
 		TrieNode current = root;
-		for(int i = 0; i < wordBuffer.size(); i++){
+		
+		for(int i = 0; i < word.length(); i++){
+			
+			Character curChar = word.charAt(i);
 			if( current.Children == null){
 				current.Children = new LinkedHashMap<Character, TrieNode>();
 			}
-			if(!current.Children.contains(wordBuffer.get(i))){
-				current.Children.put(wordBuffer.get(i), new TrieNode(wordBuffer.get(i)));
+			if( !current.Children.containsKey(curChar) ){
+				current.Children.put(curChar, new TrieNode(curChar));
 			}
-			current = current.Children.get(wordBuffer.get(i));
+			current = current.Children.get(curChar);
 			
 		}
 		current.IsTerminalNode = true;
+		current = root;	
 	}
 	
-	public void ResetTrie(){
+	
+	public Boolean Parse(String s){
+	
 		current = root;
-	}
-	
-	public bool IsCurrentNodeTerminal(){
-		return current.IsTerminalNode;
-	}
-	
-	public bool Parse(Character c){
-		if(c == null)
-		{
-			return true;
-		}
-		if(current.Children.contains(c)){
-			current = current.Children.get(c);
-			return true;
-		}
-		return false;
-	}
-	
-	public bool Parse(String s){
 		if(s == null || s == "" )
 		{
 			return true;
 		}
-		StringBuffer sb = new StringBuffer(s);
-		for( int i = 0 ; i < sb.size(); i++){
-			if(current.Children.contains(sb[i])){
-				current = current.Children.get(sb[i]);
-			}else{
+		for( int i = 0 ; i < s.length(); i++){
+			Character curChar = new Character(s.charAt(i));
+			if(current.Children == null || !current.Children.containsKey(curChar) ){
 				return false;
+			}else{
+				current = current.Children.get(curChar);
 			}
 		}
 		return true;
 	}
 	
 	
-	public bool CanParse(Character c){
+	/* not required currently, but still leaving it. not tested! */
+	public void ResetTrie(){
+		current = root;
+	}
+	
+	public Boolean IsCurrentNodeTerminal(){
+		return current.IsTerminalNode;
+	}
+	
+	public Boolean Parse(Character c){
 		if(c == null)
 		{
-			return false;
+			return true;
 		}
-		return current.Children.contains(c);
+		if(current.Children.containsKey(c)){
+			current = current.Children.get(c);
+			return true;
+		}
+		return false;
 	}
 	
-	public void Trie(String fileName){
-		
-		
 	
-	}
+	
 
 
 }

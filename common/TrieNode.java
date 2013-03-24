@@ -1,9 +1,11 @@
+import java.util.*;
+
 public class TrieNode{
 	public Character Data;
 	public LinkedHashMap<Character, TrieNode> Children;
-	public bool IsTerminalNode;
+	public Boolean IsTerminalNode;
 	
-	public bool IsLastChar(){
+	public Boolean IsLastChar(){
 		if(Children == null || Children.size() == 0){
 			return true;
 		}

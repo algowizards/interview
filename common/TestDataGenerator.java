@@ -13,6 +13,17 @@ public class TestDataGenerator{
 		}
 		return array;
 	}
+	public static Integer[][] GetArray(int dim1, int dim2, boolean fillWithRandom, int bound){
+		if(dim1 < 0 || dim2 < 0 || bound < 0){
+			return null;
+		}
+		Integer[][] result = new Integer[dim1][];
+		for(int i = 0 ; i < dim1 ; i++){
+			result[i] = GetArray(dim2, fillWithRandom, bound);
+		}
+		return result;
+	}
+	
 	
 	public static void FillWithRandomValues(Integer[] array, int bound){
 		if(array == null || bound < 1){
@@ -59,10 +70,24 @@ public class TestDataGenerator{
 			}
 		}	
 	}
+	public static void MakeRandomValuesNegative(Integer[][] array){
+		if(array == null){
+			return;
+		}
+		for(int i = 0; i< array.length; i++){
+			MakeRandomValuesNegative(array[i]);
+		}
+	}
 	
 	public static<T> void PrintArray(T[] array){
 	
 		PrintArray(new ArrayList<T>(Arrays.asList(array)));
+	}
+	
+	public static<T> void PrintArray(T[][] array){
+		for(int i = 0; i < array.length; i++){
+			PrintArray(array[i]);
+		}
 	}
 	
 	public static<T> void PrintArray(ArrayList<T> array){
