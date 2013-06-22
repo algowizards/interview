@@ -1,31 +1,17 @@
 import java.util.*;
 
 public class MyGraph{
-	int NODE_CNT = 1000;
-	LinkedHashMap<Node, ArrayList<Edge>> adjList = new LinkedHashMap<Node, ArrayList<Edge>>(NODE_CNT);
+	int GraphNode_CNT = 1000;
+	LinkedHashMap<GraphNode, ArrayList<Edge>> adjList = new LinkedHashMap<GraphNode, ArrayList<Edge>>(GraphNode_CNT);
 	
 	class Edge{
-		Node node;
+		GraphNode GraphNode;
 		int weight = 1;
-		Edge(Node n){
-			node = n;
+		Edge(GraphNode n){
+			GraphNode = n;
 		}
 		public boolean equals(Object b){
-			return node.equals(((Edge) b).node);
-		}
-	}
-	
-	class Node{
-		int id;
-		Node(int idParam){
-			id = idParam;
-		}
-		
-		public boolean equals(Object b){
-			return id == ((Node) b).id;
-		}
-		public int hashCode(){
-			return id;
+			return GraphNode.equals(((Edge) b).GraphNode);
 		}
 	}
 	
@@ -45,9 +31,9 @@ public class MyGraph{
 	}
 	
 	class EdgeSet{
-		Node start;
-		Node end;
-		EdgeSet(Node s, Node e){
+		GraphNode start;
+		GraphNode end;
+		EdgeSet(GraphNode s, GraphNode e){
 			start = s;
 			end = e;
 		}
@@ -75,10 +61,10 @@ public class MyGraph{
 		int counter = 0;
 		for (int i = 0; i < n ; i++){
 			for(int j = 0; j < c; j++){
-				int randNode =  r.nextInt(n);
-				ea[counter++] = new EdgeSet(new Node(i), new Node(randNode));
-				if(!digraph && randNode!=i){
-					ea[counter++] = new EdgeSet( new Node(randNode), new Node(i));
+				int randGraphNode =  r.nextInt(n);
+				ea[counter++] = new EdgeSet(new GraphNode(i), new GraphNode(randGraphNode));
+				if(!digraph && randGraphNode!=i){
+					ea[counter++] = new EdgeSet( new GraphNode(randGraphNode), new GraphNode(i));
 				}
 			}
 		}
@@ -88,11 +74,11 @@ public class MyGraph{
 	
 	public void DumpGraph(){
 		System.out.println("-----------Dumping Graph-------------- of size " + adjList.size());
-		for ( Map.Entry<Node, ArrayList<Edge>> entry : adjList.entrySet()){
-		Node node = entry.getKey();
-		System.out.print("\n Node # " + node.id + ": ");
+		for ( Map.Entry<GraphNode, ArrayList<Edge>> entry : adjList.entrySet()){
+		GraphNode GraphNode = entry.getKey();
+		System.out.print("\n GraphNode # " + GraphNode.id + ": ");
 			for(Edge e: entry.getValue()){
-				System.out.print(" " + e.node.id + "-> ");
+				System.out.print(" " + e.GraphNode.id + "-> ");
 			}
 		}
 	}
