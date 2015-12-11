@@ -40,13 +40,24 @@ public class TestDataGenerator{
 		for(int i = 0; i < array.length ; i++){
 			int randIndex = r.nextInt((array.length-i) );
 			Swap(array, (array.length-i-1) , randIndex);
-		
 		}
-		
+	}
+	
+	// alternate shuffle implementation. Same logic but easier to visualize
+	// logic: pick a random location between 0 to last accessible location (inclusive) in the array. swap it with the item in last accessible location. reduce accessible size by 1. repeat.
+	public static void ShuffleAlt(Integer[] array){
+		Random r = new Random();
+		for(int k = array.length-1 ; k>=0; k--){
+			int randIndex = r.nextInt(k+1); //pick a random index between 0 to k (inclusive of k. that's why we have an ugly +1)
+			Swap(array, k, randIndex); // swap the item in the random location with the last accessible element in the array and shrink accessible array size by reducing k.
+		}
 	}
 	
 	public static void PrintMasterList(ArrayList<ArrayList<Node>> masterList){
 	
+		if(masterList == null){
+			return;
+		}
 		for(int i = 0; i < masterList.size(); i++){
 			System.out.print(String.format("\nPrinting List# %d  : ", i));	
 			PrintNodeList(masterList.get(i));
@@ -54,6 +65,9 @@ public class TestDataGenerator{
 	}
 	
 	public static void PrintNodeList(ArrayList<Node> list){
+		if(list == null){
+			return;
+		}
 		for( int i=0; i < list.size(); i++){
 			System.out.print(String.format("%d ",list.get(i).data));
 		}
@@ -65,7 +79,7 @@ public class TestDataGenerator{
 			return;
 		Random r = new Random();	
 		for(int i = 0; i< array.length; i++){
-			if( (r.nextInt()%2) == 0 ){
+			if( r.nextInt(2) == 0 ){
 				array[i] = -array[i];				
 			}
 		}	
@@ -120,6 +134,10 @@ public class TestDataGenerator{
 		Integer[] temp = GetArray( 10, true, 20);
 		PrintArray(temp);
 		MakeRandomValuesNegative(temp);
+		PrintArray(temp);
+		temp = GetArray( 10, false, 10);
+		PrintArray(temp);
+		ShuffleAlt(temp);
 		PrintArray(temp);
 	}
 	
