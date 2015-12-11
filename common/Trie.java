@@ -3,7 +3,6 @@ import java.util.*;
 public class Trie{
 	
 	private TrieNode root = new TrieNode(null);
-	private TrieNode current = root;
 	
 	public void BuildTrie(ArrayList<String> wordList){
 		
@@ -40,7 +39,7 @@ public class Trie{
 	
 	public Boolean Parse(String s){
 	
-		current = root;
+		Trie current = root;
 		if(s == null || s == "" )
 		{
 			return true;
@@ -58,6 +57,7 @@ public class Trie{
 	
 	
 	/* not required currently, but still leaving it. not tested! */
+	/*
 	public void ResetTrie(){
 		current = root;
 	}
@@ -77,9 +77,5 @@ public class Trie{
 		}
 		return false;
 	}
-	
-	
-	
-
-
+	*/
 }

@@ -2,38 +2,49 @@ import java.util.*;
 
 public class TreeHelper{
 
-	public static TreeNode<Integer> BuildRandomTree(int n, int bound, boolean biased){
+	public static TreeNode<Integer> BuildRandomTree(int n, int bound, boolean biased ){
+		return BuildRandomTree(n, bound, biased, false);
+	}
+	public static TreeNode<Integer> BuildRandomTree(int n, int bound, boolean biased, boolean positiveOnly){
 		
 		if (n <= 0){
 			return null;
 		}
 		Random r = new Random();
-		TreeNode<Integer> root = new TreeNode<Integer>(r.nextInt()%bound);
-		n = n-1; //for current node
+		TreeNode<Integer> root = new TreeNode<Integer>((positiveOnly ?(Math.abs(r.nextInt()%bound)): (r.nextInt()%bound)));
+		n = n-1; //reduce 'n' by 1 for current node and recursively generate for n-1 nodes
 		int firstHalf = n/2;
 		int secondHalf = n - (n/2);
 		
-		int randomChoice = r.nextInt()%400;
+		
 		if(biased){
-			randomChoice = (int) (randomChoice * 2);
+			int randomChoice = Math.abs(r.nextInt()%3); // left skewed, right skewed and unbiased
+			switch(randomChoice)
+			{
+				case 0: // left skewed
+				secondHalf = 0;
+				break;
+				case 1: // right skewed
+				firstHalf = 0;
+				break;
+				default: // no skew 
+				break;
+			}
 		}
-		if( randomChoice < 100 ){
-			secondHalf = 0;
-		}else if( randomChoice < 200 ){
-			firstHalf = 0 ;
-		}else if ( randomChoice < 300 ){
-			firstHalf = 0 ;
-			secondHalf = 0;
-		}
-		root.left = BuildRandomTree(firstHalf + secondHalf, bound, biased);
-		root.right = BuildRandomTree(n - (firstHalf + secondHalf) , bound, biased);
+		
+		root.left = BuildRandomTree(firstHalf, bound, biased, positiveOnly);
+		root.right = BuildRandomTree(secondHalf , bound, biased, positiveOnly);
 		return root;
 	}
 	
 	
 	public static void main(String args[]){
-		TreeNode<Integer> root = BuildRandomTree(10, 20, false);
+		TreeNode<Integer> root = BuildRandomTree(7, 20, false, true);
 		BTreePrinter.printNode(root);
+		
+		root = BuildRandomTree(7, 20, false, false);
+		BTreePrinter.printNode(root);
+
 	}
 	
 }
