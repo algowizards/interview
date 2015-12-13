@@ -42,7 +42,7 @@ public class TreeHelper{
 		TreeNode<Integer> root = BuildRandomTree(7, 20, false, true);
 		BTreePrinter.printNode(root);
 		
-		root = BuildRandomTree(7, 20, false, false);
+		root = BuildRandomTree(40, 20, false, false);
 		BTreePrinter.printNode(root);
 
 	}

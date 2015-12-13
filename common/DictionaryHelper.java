@@ -15,7 +15,7 @@ public class DictionaryHelper{
 	}
 	
 	public static void LoadDictionary(){
-		LoadDictionary("C:\\Users\\KayySean\\Documents\\GitHub\\interview\\common\\dictionary.csv");
+		LoadDictionary("dictionary.csv");
 	}
 	public static void LoadDictionary(String fileName){	
 		
