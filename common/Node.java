@@ -1,11 +1,8 @@
-public class Node{
-	Integer data;
-	Node next;
+public class Node<T>{
+	T data;
+	Node<T> next;
 	
-	public Node(Integer nodeData)throws Exception{
-		if(nodeData == null){
-			throw new Exception ("Null value for nodeData is not permissible");
-		}
+	public Node(T nodeData){
 		data = nodeData;
 		next = null;
 	}
