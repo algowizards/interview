@@ -687,6 +687,226 @@ public static boolean isUniqueAscii(String str) throws Exception{
 		return true;
 	}
 	
+	public String compressAtt2(String s){
+		
+		if(s == null || s.length() <= 1){
+			return s;
+		}
+		
+		int compLen = findCompLen(s);
+		if(compLen >= s.length()){
+			return s;
+		}
+		
+		StringBuffer sb = new StringBuffer(compLen);
+		int locCnt = 0;
+		
+		for (int i = 0 ; i < s.length(); i++){
+			locCnt++;
+			
+			if( (i+1 >= s.length() ) || s.charAt(i) != s.charAt(i+1)){
+				sb.append(s.charAt(i));
+				sb.append(locCnt);
+				locCnt = 0;
+			}
+		}
+		return sb.toString();
+	}
+	
+	private static int findCompLen(String s){
+		
+		int totalCnt = 0;
+		int compLen = 0;
+		
+		for(int i = 0 ; i < s.length(); i++){
+			compLen++;
+			if( (i+1 >= s.length()) || s.charAt(i)!= s.charAt(i+1)){
+				totalCnt+= 1 + String.valueOf(compLen).length();
+			}
+		}
+		return totalCnt;
+		
+	}
+	
+	
+	public static String compressAtt3(String s){
+		
+		if(s == null || s.length() <=1){
+			
+			return s;
+		}
+		
+		int compLen = findCompLenAtt3(s);
+		
+		if(compLen >= s.length()){
+			return s;
+		}
+		
+		StringBuffer sb = new StringBuffer(compLen);
+		
+		int currLen = 0;
+		for(int i = 0 ; i < s.length(); i++){
+			currLen++;
+			if( (i+1 > s.length()) || s.charAt(i) != s.charAt(i+1)){
+				sb.append(s.charAt(i));
+				sb.append(currLen);
+				currLen = 0;
+			}
+		}
+		
+		return sb.toString();
+	}
+	
+	private static int findCompLenAtt3(String s){
+		
+		int totalCnt = 0;
+		int locCnt = 0;
+		
+		for(int i = 0; i < s.length() ; i++){
+			
+			locCnt++;
+			
+			if( (i+1 > s.length() ) || s.charAt(i) != s.charAt(i+1)){
+				
+				totalCnt+= 1 + String.valueOf(locCnt).length();
+			}
+		}
+		return totalCnt;
+	}
+	
+	
+	
+	public static String compressAtt4(String s){
+		
+		if(s == null || s.length() <= 1){
+			return s;
+		}
+		
+		int compLen = findCompLenAtt4(s);
+		
+		if(compLen >= s.length()){
+			return s;
+		}
+		
+		int currLen = 0;
+		StringBuffer sb = new StringBuffer(compLen);
+		
+		for(int i = 0; i < s.length(); i++){
+			currLen++;
+			
+			if( (i+1 >= s.length()) || (s.charAt(i)!= s.charAt(i+1))  ){
+				sb.append(s.charAt(i));
+				sb.append(currLen);
+				currLen = 0;
+			}
+		}
+		return sb.toString();
+	}
+	
+	
+	
+	private static int findCompLenAtt4(String s){
+		
+		int totalCnt = 0;
+		int locCnt = 0;
+		
+		for(int i = 0; i < s.length(); i++){
+			
+			if( (i+1 >= s.length()) || s.charAt(i) != s.charAt(i+1) ){
+				totalCnt+= 1 + String.valueOf(locCnt).length();
+				locCnt = 0;
+			} 	
+			
+		}
+		return totalCnt;
+	}
+	
+	public void rotateMatrix(int[][] matrix){
+		if (matrix == null || matrix.length == 0 || matrix[0].length == 0 ){
+			return;
+		}
+	
+		for(int layer = 0 ; layer < matrix.length/2; layer++){
+			
+			int first = layer;
+			int last = matrix.length - 1 - layer;
+			for(int i = first; i < last; i++){
+				int offset = i - first;
+				
+				int top = matrix[first][i];
+				
+				matrix[first][i] = matrix[last - offset][first];
+				matrix[last - offset][first] = matrix [last][last-offset];
+				matrix[last][last - offset] = top;
+			}
+		
+		}
+	}
+	
+	
+	//assuming n*n matrix
+	public void nullifyMatrix(int[][] matrix ){
+	
+		if(matrix == null || matrix.length == 0 || matrix[0].length == 0){
+			return;
+		}
+		
+		boolean rowHasZero = false;
+		boolean colHasZero = false;
+		
+		for (int j = 0; j < matrix[0].length; j++){
+			if(matrix[0][j] == 0){
+				rowHasZero = true;
+		}
+		
+		for(int i = 0; i < matrix.length; i++){
+			if(matrix[i][0] == 0){
+				colHasZero = true;
+			}
+		}
+		
+		for(int i = 1; i < matrix.length; i++){
+			for int j = 1; j< matrix[0].length; j++){
+				if(matrix[i][j] == 0){
+					matrix[i][0] = 0;
+					matrix [0][j] = 0;
+				}
+			}
+		}
+		
+		for(int i = 1; i < matrix.length; i++){
+			if(matrix[i][0] == 0){
+				NullifyRow(matrix, i);
+			}
+		}
+
+		for(int j = 1; j < matrix[0].length; j++){
+			if(matrix[0][j] == 0){
+				NullifyColumn(matrix, j);
+			}
+		}
+		
+		if(rowHasZero){
+			NullifyRow(matrix, 0);
+		}
+		
+		if(colHasZero){
+			NullifyColumn(matrix, 0);
+		}
+	}
+	
+	
+	private void NullifyRow(int[][] matrix, int row){
+		for(int j= 0 ; j < matrix[0].length ; j++){
+				matrix[row][j] = 0;
+			}
+	}
+	
+	private void NullifyColumn(int[][] matrix, int col){
+	for(int i=0; i < matrix.length; i++){
+				matrix[i][col] = 0;
+			}
+	}
 	
 	public  static void main(String args[]) throws Exception{
 		
@@ -711,6 +931,23 @@ public static boolean isUniqueAscii(String str) throws Exception{
 		s2 ="carty";
 		System.out.println("Is " + s1 + " and " + s2 + " One Char away? " + OneCharAwayAtt2(s1, s2));
 		
+
+		data = "aaaaab";
+		System.out.println( data + " on compression becomes:  " + compressAtt4(data));
+
+		data = "aaabb";
+		System.out.println( data + " on compression becomes:  " + compressAtt4(data));
+
+		data = "aaaabc";
+		System.out.println( data + " on compression becomes:  " + compressAtt4(data));
+
+		data = "ab";
+		System.out.println( data + " on compression becomes:  " + compressAtt4(data));
+		
+		data = "aaaaabbbcc";
+		System.out.println( data + " on compression becomes:  " + compressAtt4(data));
+
 	}
+	
 }
 
