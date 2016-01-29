@@ -844,7 +844,6 @@ public static boolean isUniqueAscii(String str) throws Exception{
 	}
 	
 	
-	//assuming n*n matrix
 	public void nullifyMatrix(int[][] matrix ){
 	
 		if(matrix == null || matrix.length == 0 || matrix[0].length == 0){
@@ -853,7 +852,7 @@ public static boolean isUniqueAscii(String str) throws Exception{
 		
 		boolean rowHasZero = false;
 		boolean colHasZero = false;
-		
+			}
 		for (int j = 0; j < matrix[0].length; j++){
 			if(matrix[0][j] == 0){
 				rowHasZero = true;
@@ -866,7 +865,7 @@ public static boolean isUniqueAscii(String str) throws Exception{
 		}
 		
 		for(int i = 1; i < matrix.length; i++){
-			for int j = 1; j< matrix[0].length; j++){
+			for (int j = 1; j< matrix[0].length; j++){
 				if(matrix[i][j] == 0){
 					matrix[i][0] = 0;
 					matrix [0][j] = 0;
@@ -908,6 +907,97 @@ public static boolean isUniqueAscii(String str) throws Exception{
 			}
 	}
 	
+	public static void rotateMatrixAtt2(int[][] matrix){
+		
+		if( matrix == null || matrix.length == 0 || matrix.length != matrix[0].length){
+			return;
+		}
+		
+		int n = matrix.length;
+		
+		for(int layer = 0; layer < n/2; layer++){
+			
+			int first = layer;
+			int last = n - 1 - layer;
+			
+			for (int i = first; i < last; i++){
+				int offset = i - first;
+				
+				int top = matrix[first][i];
+				matrix[first][i] = matrix[last - offset][first];
+				matrix [last - offset] [first] = matrix[last][last-offset];
+				matrix[last][last-offset] = matrix[i][last];
+				matrix[i][last] = top;
+			}				
+		}
+	}
+	
+	//
+	public static void NullifyMatrixAtt2(int[][] matrix){
+	
+		if(matrix == null || matrix.length == 0 || matrix[0].length == 0 ){
+			return;
+		}
+		
+		boolean colHasZero = false;
+		boolean rowHasZero = false;
+		
+		for (int i = 0; i < matrix.length; i++){
+			if(matrix[i][0] == 0){
+				colHasZero = true;
+			}
+		}
+		
+		for(int j = 0; j < matrix[0].length; j++){
+			if(matrix[0][j] == 0){
+				rowHasZero = true;
+			}
+		}
+		
+		for(int i = 1; i < matrix.length; i++){
+			for(int j = 1; j< matrix[0].length; j++){
+				if(matrix[i][j] == 0){
+					matrix[i][0] = 0;
+					matrix[0][j] = 0;
+				}
+			}
+		}
+		
+		for(int i = 1; i < matrix.length; i++){
+			if(matrix[i][0] == 0 ){
+				NullifyRowAtt2(matrix, i);
+			}
+		}
+		
+		for(int j = 1; j < matrix[0].length; j++){
+			if(matrix[0][j] == 0){
+				NullifyColumnAtt2(matrix, j);
+			}
+		}
+		
+		if(rowHasZero){
+			NullifyRowAtt2(matrix, 0);
+		}
+		if(colHasZero){
+			NullifyColumnAtt2(matrix, 0);
+		}
+	}
+	
+	private static void NullifyRowAtt2(int[][] matrix, int row){
+	
+		for(int j = 0; j< matrix[0].length; j++){
+			matrix[row][j] = 0;
+		}
+	}
+	
+	private static void NullifyColumnAtt2(int [][] matrix, int col){
+	
+		for(int i = 0; i < matrix.length;i++){
+			matrix[i][col] = 0;
+		}
+	}
+	
+	
 	public  static void main(String args[]) throws Exception{
 		
 		String data = "abc";
@@ -946,7 +1036,34 @@ public static boolean isUniqueAscii(String str) throws Exception{
 		
 		data = "aaaaabbbcc";
 		System.out.println( data + " on compression becomes:  " + compressAtt4(data));
+		
+		int[][] matrix = new int[][] { {1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}};
+		printMatrix(matrix);
+		rotateMatrixAtt2(matrix);
+		printMatrix(matrix);
+		
+		matrix = new int[][] { {1,1,1,0}, {1,1,1,1}, {1,1,1,0}, {1,1,1,1}};
+		printMatrix(matrix);
+		NullifyMatrixAtt2(matrix);
+		printMatrix(matrix);
 
+	}
+	
+	private static void printMatrix(int[] [] matrix){
+		if(matrix == null){
+			return;
+		}
+		
+		System.out.println("Printing out matrix of size: " + matrix.length + " X " + matrix[0].length);
+		for (int i = 0; i < matrix.length; i++){
+			
+			for( int j = 0; j < matrix[0].length; j++){
+			
+				System.out.format("%4d", matrix[i][j]);
+			}
+			System.out.println("");
+		}
+		
 	}
 	
 }
