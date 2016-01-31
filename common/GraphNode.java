@@ -7,6 +7,8 @@ public class GraphNode<T>{
 	T data;
 	HashSet<T> neighbors;
 	boolean isProcessed;
+	NodeState state;
+	
 	
 	public GraphNode(T inputData){
 		data = inputData;
