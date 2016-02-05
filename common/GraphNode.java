@@ -8,24 +8,24 @@ public class GraphNode<T>{
 	HashSet<T> neighbors;
 	boolean isProcessed;
 	NodeState state;
-	
+	UUID uuid;
 	
 	public GraphNode(T inputData){
 		data = inputData;
 		neighbors = new HashSet<T>();
+		uuid = UUID.randomUUID();
 	}
-	/*
+	
 	@Override
     public int hashCode() {
-		return this.data.hashCode();
+		return this.uuid.hashCode();
 	}
 	
 	@Override
 	public  boolean equals(Object obj){
 		
         GraphNode rhs = (GraphNode) obj;
-        return this.data.equals(rhs.data);
+        //return this.data.equals(rhs.data);
+		return this.uuid.equals(rhs.uuid);
 	} 
-	*/
-	
 }

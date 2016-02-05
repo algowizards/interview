@@ -1,11 +1,11 @@
 import java.util.*;
 
-public class Stack{
+public class MyStack{
 	ArrayList<Integer> _stack;
 	int size;
 	//int top = -1;
 
-	public Stack(int stackSize){
+	public MyStack(int stackSize){
 		_stack  = new ArrayList<Integer> ();
 		size = stackSize;
 	}
@@ -17,7 +17,7 @@ public class Stack{
 			//top++;
 			return;
 		}
-		throw new Exception ("Stack overflow");
+		throw new Exception ("MyStack overflow");
 	}
 	
 	public Integer Pop()throws Exception{
@@ -25,7 +25,7 @@ public class Stack{
 		if(_stack.size() > 0){
 			return _stack.remove(_stack.size() - 1);
 		}
-		throw new Exception ("Stack underflow");
+		throw new Exception ("MyStack underflow");
 	}
 	
 	public Integer Peek() throws Exception{
@@ -33,13 +33,13 @@ public class Stack{
 		if(_stack.size() > 0){
 			return _stack.get(_stack.size() - 1);
 		}
-		throw new Exception ("Stack underflow");
+		throw new Exception ("MyStack underflow");
 	}
 
 	public static void main(String args[]){
 		try{
 		
-			Stack s = new Stack(2);
+			MyStack s = new MyStack(2);
 			s.Push(new Integer(1));
 			s.Push(new Integer(2));
 			System.out.println( String.format(" Peek  %d" , s.Peek()));

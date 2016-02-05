@@ -62,7 +62,7 @@ public class TreeHelper{
 		root = BuildRandomTree(40, 20, false, false);
 		BTreePrinter.printNode(root);
 		
-		root = BuildRandomTree(10, 10, false, true, false);
+		root = BuildRandomTree(10, 5, false, true, false);
 		BTreePrinter.printNode(root);
 
 

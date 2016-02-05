@@ -222,7 +222,7 @@ public static boolean isUniqueAscii(String str) throws Exception{
 		
 		int spaceCnt = CountSpaces(s, len);
 		
-		int wPtr = len + 2 * spaceCnt;
+		int wPtr = len - 1 + 2 * spaceCnt;
 		int rPtr = len - 1;
 		
 		if( wPtr > s.length - 1){
@@ -852,10 +852,11 @@ public static boolean isUniqueAscii(String str) throws Exception{
 		
 		boolean rowHasZero = false;
 		boolean colHasZero = false;
-			}
+			
 		for (int j = 0; j < matrix[0].length; j++){
 			if(matrix[0][j] == 0){
 				rowHasZero = true;
+			}	
 		}
 		
 		for(int i = 0; i < matrix.length; i++){
@@ -998,7 +999,385 @@ public static boolean isUniqueAscii(String str) throws Exception{
 	}
 	
 	
-	public  static void main(String args[]) throws Exception{
+	public static int KadanesAlgo(int[] a){
+		
+		if(a == null || a.length == 0){
+			return 0;
+		}
+		
+		int cs = a[0];
+		int ts = a[0];
+		
+		for (int i = 1; i < a.length; i++){
+			cs = Math.max( a[i], cs + a[i]);
+			ts = Math.max( ts, cs);
+		}
+		
+		return ts;	
+	}
+	
+	public static SubSumWithIndices KadanesAlgoWithSubSumIndices(int[] a){
+		
+		if(a == null || a.length == 0){
+			return new SubSumWithIndices(-1, -1, -1);
+		}
+		
+		int cs = a[0];
+		int ts = a[0];
+		
+		int csp = 0;
+		int cep = 0;
+		
+		int tsp = 0;
+		int tep = 0;
+		
+		//boolean startIndexChanged = false;		
+		
+		for (int i = 1; i < a.length; i++){
+			
+			if( a[i] >= cs + a[i]){
+				cs = a[i];
+				csp = i;
+				cep = i;
+				//startIndexChanged = true;
+			}else{
+				cs = cs + a[i];
+				cep = i;
+			}
+			
+			if(cs > ts){
+				ts = cs;
+				/*
+				if(startIndexChanged){
+					tsp = csp;
+					tep = cep;
+					startIndexChanged = false;
+				}
+				else{
+					tep = cep;
+				}*/
+				tsp = csp;
+				tep = cep;
+			}
+		}
+		
+		return new SubSumWithIndices(ts, tsp, tep);	
+	}
+	
+	public static SubSumWithIndices KadaneWithIndicesAtt2(int[] a){
+	
+		if(a == null || a.length == 0)
+		{
+			return new SubSumWithIndices(-1, -1 , -1);
+		}
+		
+		int cs = a[0];
+		int ts = a[0];
+		
+		int csp = 0;
+		int cep = 0;
+		
+		int tsp = 0;
+		int tep = 0;
+		
+		for(int i = 1; i < a.length; i++)
+		{
+			if(a[i] > (cs + a[i]) )
+			{
+				cs = a[i];
+				csp = i;
+				cep = i;
+			}else{
+				cs = (cs + a[i]);
+				cep = i;
+			}
+			
+			if(cs > ts)
+			{
+				ts = cs;	
+				tsp = csp;
+				tep = cep;
+			}
+		}
+		
+		return new 	SubSumWithIndices(ts, tsp, tep);
+	}
+	
+	
+	public static int ParseInt(String s) throws Exception{
+			
+		if( s == null){
+			return 0;
+		}	
+		
+		s = s.trim();
+		
+		if(s.length() == 0){
+			return 0;
+		}
+		char sign ='\0';
+		
+		int i = 0;
+		
+		if(s.charAt(0) == '+' || s.charAt(0) == '-'){
+			sign = s.charAt(0);
+			i++;
+		}
+		
+		long parsed = 0;
+		
+		for( ;i < s.length(); i++){
+			
+			int intVal = s.charAt(i) - '0';
+			
+			if(intVal >= 0 && intVal <= 9){
+				parsed = parsed*10 + intVal;
+			}
+			else{
+				// deal with the non-int character
+				throw new Exception("Invalid char detected: " + s.charAt(i));
+			}
+		}
+		
+		if(sign == '-'){
+			parsed = -parsed;
+		}
+		
+		if(parsed > Integer.MAX_VALUE){
+			parsed = Integer.MAX_VALUE;
+		}else if (parsed < Integer.MIN_VALUE){
+			parsed = Integer.MIN_VALUE;
+		}
+		
+		return (int) parsed;
+	}
+	
+	
+	
+	public static ArrayList<Integer> Intersect(ArrayList<Integer> l1, ArrayList<Integer> l2){
+		
+		if(l1 == null || l2 == null || l1.size() == 0 || l2.size() == 0){
+			return null;
+		}
+		
+		ArrayList<Integer> larger = l1.size() >= l2.size() ? l1: l2;
+		ArrayList<Integer> smaller = l1.size() >= l2.size() ? l2: l1;
+		
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		HashSet<Integer> numSet = new HashSet<Integer>();
+		
+		for(int i = 0 ; i < smaller.size(); i++){
+			numSet.add(smaller.get(i));
+		}
+		
+		for(int j = 0 ; j < larger.size(); j++){
+			if(numSet.contains(larger.get(j))){
+				result.add(larger.get(j));
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	public static void Shuffle(Integer[] a){
+		if(a == null || a.length <= 1){
+			return;
+		}
+		
+		Random r = new Random();
+		for( int i = a.length; i > 1; i--){
+			int index = Math.abs(r.nextInt()) % i;
+			Swap(a, index, i-1);
+		}
+	}
+	
+	private static void Swap(Integer[] a, int i, int j){
+		int temp = a[i];
+		a[i] = a[j];
+		a[j] = temp;
+	}
+	
+	
+	public static void ShuffleAtt2(Integer[] a){
+	
+		if(a == null || a.length <= 1){
+			
+			return;
+		}
+		Random r = new Random();
+		
+		for( int i = a.length; i > 1; i--){
+			int index = Math.abs(r.nextInt()) % i;
+			SwapAtt2(a, index, i-1);	
+		}
+	}
+	
+	private static void SwapAtt2(Integer[] a, int i , int j){
+		int temp = a[i];
+		a[i] = a[j];
+		a[j] = temp;
+	}
+	
+	public static int CountBits(int n ){
+		int counter = 0;
+		while( n != 0){
+			n = (n & (n - 1));
+			counter++;
+		}
+		return counter;
+	}
+	
+	public static ArrayList<Integer> FindMinCoins(int[] coins, int total){
+		
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		
+		if(coins == null || coins.length == 0 || total <= 0 ){
+			return result; //or throw exception
+		}
+		
+		int[] T = new int [total + 1];
+		int[] R = new int [total + 1];
+		
+		for (int i = 0; i < T.length; i++){
+			T[i] = Integer.MAX_VALUE - 1;
+			R[i] = -1;
+		}
+		
+		//base case
+		T[0] = 0;
+		
+		for( int j = 0 ; j < coins.length; j++){
+			for( int i = 1; i < T.length ; i++){
+				if( i >= coins[j]){
+					if( T[i] > (1 + T[ i - coins[j] ] ))  {
+						T[i] = (1 + T[ i - coins[j] ] );
+						R[i] = j;
+					}
+				}
+			}
+		}
+		
+		//updated the DP table. now parse the table and find the coins
+		
+		int val = total;
+		if(R[val] == -1){
+			// couldn't form the total with the coins. return empty list;
+			return result;
+		}
+		
+		while(val > 0){
+			int coinIndex = R[val];
+			result.add(coins[coinIndex]);
+			val = val - coins[coinIndex];
+		}
+		
+		return result;
+	}
+	
+	
+	public static ArrayList<Integer> MinCoinChangeAtt2(int[] coins, int total){
+		
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		
+		if(coins == null || coins.length == 0 || total <= 0){
+			return result;
+		}
+		
+		int[] T = new int[ total + 1];
+		int[] R = new int[ total + 1];
+		
+		for (int i = 0 ; i < T.length ; i++)
+		{
+			T[i] = Integer.MAX_VALUE - 1;
+			R[i] = -1;
+		}
+		
+		//base case
+		T[0] = 0;
+		
+		for( int j = 0 ; j < coins.length; j++)
+		{
+			for (int i = 1 ; i < T.length; i++){
+				if(i >= coins[j]){
+					if( T[i] > ( 1 + T[ i - coins[j]]) ){
+						T[i]  = 1 + T[ i - coins[j]] ;		
+						R[i] = j;
+					}
+				}
+			}
+		}
+		
+		// find the coins!
+		int val = total;
+		
+		if(R[val] == -1){
+			return result;
+		}
+		
+		while(val > 0){
+			int coinIndex = R[val];
+			int subVal = coins[coinIndex];
+			result.add(subVal);
+			val = val - subVal;
+		}
+	
+		return result;
+	}
+	
+	
+	public static ArrayList<Integer> MinCoinChangeAtt3(int[] coins, int total){
+		
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		
+		if(coins == null || coins.length == 0 || total <= 0){
+			return result;
+		}
+		
+		int[] T = new int[total + 1];
+		int[] R = new int[total + 1];
+		
+		for (int i = 0; i < T.length; i++){
+			T[i] = Integer.MAX_VALUE - 1;
+			R[i] = -1;
+		}
+		
+		//base case
+		T[0] = 0;
+		
+		for (int j = 0; j < coins.length; j++)
+		{
+			for (int i = 0; i < T.length; i++){
+			
+				if(i >= coins[j]){
+				
+					if( T[i] > ( 1 + T[ i - coins[j] ])){
+						T[i] =  1 + T[ i - coins[j] ];
+						R[i] = j;
+					}
+				}
+			}
+		}
+		
+		// find coins
+		int val = total;
+		if( R[val] == -1){ //cant find a combination
+			return result; 
+		}
+		
+		while(val > 0){
+		
+			int coinIndex = R[val];
+			int subSum = coins[coinIndex];
+			result.add(subSum);
+			val = val - subSum;
+		}
+		
+		return result;
+		
+	}
+	
+	public static void main(String args[]) throws Exception{
 		
 		String data = "abc";
 		System.out.println("Is " + data + " palindrome perm? " + isPalindromePermUnicodeAtt2(data));
@@ -1008,7 +1387,6 @@ public static boolean isUniqueAscii(String str) throws Exception{
 		System.out.println("Is " + data + " palindrome perm? " + isPalindromePermUnicodeAtt2(data));
 		data = "ab cca";
 		System.out.println("Is " + data + " palindrome perm? " + isPalindromePermUnicodeAtt2(data));
-		data = "தேரு வருதே";
 		System.out.println("Is " + data + " palindrome perm? " + isPalindromePermUnicodeAtt2(data));
 		
 		String s1 = "car";
@@ -1047,8 +1425,61 @@ public static boolean isUniqueAscii(String str) throws Exception{
 		NullifyMatrixAtt2(matrix);
 		printMatrix(matrix);
 
+		int[] test = new int[] {-4, 15, -6, 18, 2, -20 };
+		System.out.println("Maximum sub array sum using Kadane's algo: " + KadanesAlgo(test));
+		
+		SubSumWithIndices res = KadaneWithIndicesAtt2(test);
+		System.out.println("Maximum sub array using Kadane's algo.  Sum: " + res.sum + " Start Index: " + res.startIndex + " End Index: " + res.endIndex);
+		
+		test = new int[] {-4, 15, -6, 18, 2, -30, 20, 40 };
+		res = KadaneWithIndicesAtt2(test);
+		System.out.println("Maximum sub array using Kadane's algo.  Sum: " + res.sum + " Start Index: " + res.startIndex + " End Index: " + res.endIndex);
+		
+		
+		String str = "  -109999  ";
+		System.out.println(" Parsing the string: " + str + " yields an integer  value of : " + ParseInt(str));
+		
+		Integer[] testx = new Integer[] {1,2,3,4,5,6,7,8,9};
+		ShuffleAtt2(testx);
+		TestDataGenerator.PrintArray(testx);
+		
+		int bitC = 2;
+		System.out.println(" Counting bits in "  + CountBits(bitC));
+		bitC = 10;
+		System.out.println(" Counting bits in "  + CountBits(bitC));
+		bitC = 31;
+		System.out.println(" Counting bits in "  + CountBits(bitC));
+		
+		int[] coins = new int[] {2, 4};
+		int total = 6;
+		
+		ArrayList<Integer> resCoins = MinCoinChangeAtt3(coins, total);
+		PrintList(resCoins);
+		
+		coins = new int[] {7,2, 3, 6};
+		total = 13;
+		
+		resCoins = MinCoinChangeAtt3(coins, total);
+		PrintList(resCoins);
+		
 	}
 	
+	private static void PrintList(ArrayList<Integer> nums){
+	
+		if(nums == null || nums.size() == 0){
+		
+			System.out.println("");
+			System.out.println("Empty List");
+		}
+		System.out.println("");
+		for (int i = 0 ; i < nums.size(); i++) {
+			System.out.print( nums.get(i) + ", ");
+		}
+		
+		System.out.println("");
+	}
+	
+
 	private static void printMatrix(int[] [] matrix){
 		if(matrix == null){
 			return;
