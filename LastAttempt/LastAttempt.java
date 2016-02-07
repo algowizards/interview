@@ -1377,6 +1377,76 @@ public static boolean isUniqueAscii(String str) throws Exception{
 		
 	}
 	
+	private static int LAND_CHAR = 1;
+	
+	public static int CountIslands(int[][] matrix){
+		
+		if( matrix == null || matrix.length == 0 || matrix[0].length == 0)
+		{
+			return 0;
+		}
+		
+		boolean visited[][] = new boolean[matrix.length][matrix[0].length];
+		int counter = 0;
+		
+		for(int i = 0; i < matrix.length; i++)
+		{
+			for ( int j = 0; j < matrix[0].length; j++)
+			{
+				if(matrix[i][j] == LAND_CHAR && !visited[i][j])
+				{
+					counter++;
+					CountIslandUtil(matrix, visited, i, j);
+				}
+			}
+		}
+		return counter;
+	}
+	
+	private static void CountIslandUtil(int[][] matrix, boolean [][] visited, int i, int j)
+	{
+		visited[i][j] = true;
+	
+		//check all neighbors and recursively call CountIslandUtil for valid neighbors
+		if(IsSafe(matrix, visited, i - 1, j - 1)){
+			CountIslandUtil(matrix, visited, i - 1, j - 1);
+		}
+
+		if(IsSafe(matrix, visited, i , j - 1)){
+			CountIslandUtil(matrix, visited, i , j - 1);
+		}
+
+		if(IsSafe(matrix, visited, i + 1 , j - 1)){
+			CountIslandUtil(matrix, visited, i + 1, j - 1);
+		}
+
+		if(IsSafe(matrix, visited, i - 1, j )){
+			CountIslandUtil(matrix, visited, i - 1, j );
+		}
+
+		if(IsSafe(matrix, visited, i + 1, j )){
+			CountIslandUtil(matrix, visited, i + 1, j );
+		}
+
+		
+		if(IsSafe(matrix, visited, i - 1, j + 1)){
+			CountIslandUtil(matrix, visited, i - 1, j + 1);
+		}
+
+		if(IsSafe(matrix, visited, i , j + 1)){
+			CountIslandUtil(matrix, visited, i , j + 1);
+		}
+
+		if(IsSafe(matrix, visited, i + 1, j + 1)){
+			CountIslandUtil(matrix, visited, i + 1, j + 1);
+		}
+		
+	}
+	private static boolean IsSafe(int[][] matrix,  boolean[][] visited, int i, int j)
+	{
+		return ( i>= 0 && i< matrix.length && j >=0 && j< matrix[0].length && !visited[i][j] && matrix[i][j] == LAND_CHAR);
+	}
+	
 	public static void main(String args[]) throws Exception{
 		
 		String data = "abc";
@@ -1461,6 +1531,18 @@ public static boolean isUniqueAscii(String str) throws Exception{
 		
 		resCoins = MinCoinChangeAtt3(coins, total);
 		PrintList(resCoins);
+		
+		
+		matrix = new int[][]  {
+		{1, 1, 0, 0, 0},
+        {0, 1, 0, 0, 1},
+        {1, 0, 0, 1, 1},
+        {0, 0, 0, 0, 0},
+        {1, 0, 1, 0, 1}
+		};
+		
+		printMatrix(matrix);
+		System.out.println("Number of LAND(s) in the matrix : "	+ CountIslands(matrix)); 
 		
 	}
 	

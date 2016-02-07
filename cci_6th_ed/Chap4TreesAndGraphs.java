@@ -254,7 +254,7 @@ public class Chap4TreesAndGraphs{
 				Swap(A, index, lcIndex);
 				MaxHeapify(A, lcIndex, heapLastIndex);
 			}
-			else if (A[rcIndex] > A[index] && A[rcIndex] > A[index]){
+			else if (A[rcIndex] > A[index] && A[rcIndex] > A[lcIndex]){
 				Swap(A, index, rcIndex);
 				MaxHeapify(A, rcIndex, heapLastIndex);
 			}
