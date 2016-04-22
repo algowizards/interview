@@ -1447,6 +1447,249 @@ public static boolean isUniqueAscii(String str) throws Exception{
 		return ( i>= 0 && i< matrix.length && j >=0 && j< matrix[0].length && !visited[i][j] && matrix[i][j] == LAND_CHAR);
 	}
 	
+	public static int LeastPopular(Integer[] a){
+	
+		if(a == null || a.length == 0)
+		{
+			return Integer.MAX_VALUE;	
+		}
+		
+		Hashtable<Integer, Integer> table = new Hashtable<Integer, Integer>();
+		
+		for(int i = 0; i < a.length; i++){
+		
+			if(table.containsKey(a[i])){
+				int count = table.get(a[i]);
+				table.put(a[i], count + 1);
+			}else{
+				table.put(a[i], 1);
+			}
+		}
+		int minItem = Integer.MAX_VALUE;
+		int minCount = Integer.MAX_VALUE;
+		
+		Enumeration<Integer> enumKeys = table.keys();
+		
+		while(enumKeys.hasMoreElements()){
+			Integer key = enumKeys.nextElement();
+			Integer value = table.get(key);
+			if(value < minCount)
+			{
+				minItem = key;
+				minCount = value;
+			}
+		}
+		
+		return minItem;
+	}
+	
+	public static int LeastPopularSorting(Integer[] a){
+		if(a == null || a.length == 0)
+			{
+				return Integer.MAX_VALUE;	
+			}
+		
+		Arrays.sort(a);
+		
+		int p = 0;
+		int q = 0;
+		
+		
+		int minItem = Integer.MAX_VALUE;
+		int minCount = Integer.MAX_VALUE;
+		
+		while(q < a.length){
+			
+			while( q < a.length && a[p] == a[q])
+			{
+				q++;
+			}
+			
+			int count = q - p;
+			if(count < minCount)
+			{
+				minCount = count;
+				minItem = a[p];	
+			}
+			
+			p = q;
+		}
+		
+		return minItem;
+		
+	}
+	
+	
+	public static int LeastPopularSortingAtt2(Integer[] a){
+		
+		int minItem = Integer.MAX_VALUE;
+		int minCount = Integer.MAX_VALUE;
+		
+		if( a == null || a .length == 0)
+		{
+			return minItem;
+		}
+		
+		Arrays.sort(a);
+		int  p = 0;
+		int q = 0;
+		
+		while( q < a.length)
+		{
+			while( q < a.length && a[p] == a[q]){
+				q++;
+			}
+			
+			int count = q - p;
+			
+			if( count < minCount)
+			{
+				minItem = a[p];
+				minCount = count;
+			}
+			
+			p = q;
+		}
+		
+		return minItem;
+		
+	}
+	
+	public static int FindMissing(Integer[] a, int n){
+	
+		int missingItem = Integer.MAX_VALUE;
+		if( a == null || a .length == 0)
+		{
+			return missingItem;
+		}
+		
+		int xor1 = a[0];
+		for(int i = 1; i < a.length; i++)
+		{
+			xor1^=a[i];
+		}
+		
+		int xor2 = 0;
+		for(int i = 1; i <=n; i++){
+			xor2^=i;
+		}
+		
+		return xor1^xor2;
+		
+	}
+	
+	public static int SecondMax(Integer[] a){
+		
+		int first = Integer.MIN_VALUE;
+		int second = Integer.MIN_VALUE;
+		
+		if(a == null || a.length == 0){
+			return second;
+		}
+		
+		first = a[0];
+		
+		for (int i = 1 ; i < a.length; i++)
+		{
+			if(a[i] > first){
+				second = first;
+				first = a[i];
+				
+			} else if( a[i] > second){
+				second = a[i];
+			}
+
+		}
+		
+		return second;
+	}
+	
+	
+	public static ArrayList<Integer> IntersectSorted(ArrayList<Integer> l1, ArrayList<Integer> l2){
+	
+		ArrayList<Integer>  result = new ArrayList<Integer> ();
+		if(l1 == null || l2 == null){
+			return result;
+		}
+		
+		int i = 0;
+		int j = 0;
+		
+		while( i< l1.size() && j < l2.size())
+		{	
+			Integer e1 = l1.get(i);
+			Integer e2 = l2.get(j);
+			
+			if( e1 == e2 )
+			{
+				result.add(e1);
+				i++;
+				j++;
+			}else if (e1 < e2){
+				i++;		
+			}else{
+				j++;
+			}
+		}
+		
+		return result;
+	}
+	
+	public static int TrappedRainWater(Integer[] a){
+		
+		if(a == null || a.length == 0)
+		{
+			return 0;
+		}
+		
+		int[] left = new int[a.length];
+		int[] right = new int[a.length];
+		
+		int water = 0;
+		
+		left[0] = a[0];
+		
+		for( int i = 1; i < a.length; i++){
+			left[i] = Math.max(left[i-1], a[i]);	
+		}
+		
+		right[a.length - 1] = a[a.length - 1];
+		
+		for( int j = a.length - 2 ; j >=0 ; j--){
+			right[j] = Math.max(right[j+1] , a[j]);
+		}
+		
+		for(int w = 0 ; w < a.length; w++){
+			water+= ( Math.min(left[w], right[w]) - a[w] );
+		}
+		
+		return water;
+	}
+	
+	public static ArrayList<Integer> FibonicciItems(Integer[] arr)
+	{
+		ArrayList<Integer> res = new ArrayList<Integer>();
+		
+		if(arr == null || arr.length == 0)
+		{
+			return res;
+		}
+		
+		int a = 0;
+		int b = 1;
+		
+		res.add(arr[a]);
+		
+		while( b < arr.length ){
+			int c = b;
+			b = a + b;
+			a = c;
+			res.add(arr[a]);
+		}
+		
+		return res;
+	}		
+	
 	public static void main(String args[]) throws Exception{
 		
 		String data = "abc";
@@ -1544,7 +1787,33 @@ public static boolean isUniqueAscii(String str) throws Exception{
 		printMatrix(matrix);
 		System.out.println("Number of LAND(s) in the matrix : "	+ CountIslands(matrix)); 
 		
+		Integer[] minPopArray = new Integer[]{1,1,1,2,2,5,3,3,3,4,4,4,5,5,6,6,6,7,7,7,7};
+		TestDataGenerator.PrintArray(minPopArray);
+		System.out.println("Least popular item :  "	+ LeastPopularSortingAtt2(minPopArray)); 
+
+		Integer[] missingArray = new Integer[]{0,1,2,3,4,5,6,8};
+		TestDataGenerator.PrintArray(missingArray);
+		System.out.println("Missing item:  "	+ FindMissing(missingArray, missingArray.length )); 
+		
+		Integer[] secLargest = new Integer[]{0,1,2,3,4,5,6,8, -7};
+		TestDataGenerator.PrintArray(secLargest);
+		System.out.println("Second largest item:  "	+SecondMax(secLargest)); 
+	
+		Integer[] rainArray = new Integer[] {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
+		TestDataGenerator.PrintArray(rainArray);
+		System.out.println("Total rainwater collected:  "	+TrappedRainWater(rainArray)); 
+		
+		rainArray = new Integer[] {5, 1, 1, 1, 5, 0, 0, 5};
+		TestDataGenerator.PrintArray(rainArray);
+		System.out.println("Total rainwater collected:  "	+TrappedRainWater(rainArray)); 
+		
+		Integer[] fibArray = new Integer[] {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+		TestDataGenerator.PrintArray(fibArray);
+		System.out.println("Items at the Fibonacci index: "	); 
+		PrintList(FibonicciItems(fibArray));
+
 	}
+	
 	
 	private static void PrintList(ArrayList<Integer> nums){
 	
